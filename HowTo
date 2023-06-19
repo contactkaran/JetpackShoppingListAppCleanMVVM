@@ -51,6 +51,67 @@ elvis operate makes sure if the instance is null, a new datbase gets created
 sync - means to lock only a single thread to owrk on this operation
 start building new database instance with variable "instance" using Room db builder
 so now instance will be set equal to INSTANCE and return the db
+We have now created a db in thread-safe manner
+
+As we try to Build Package we get error for val date: Date in the Model.kt file
+error: Cannot figure out how to save this field into database. You can consider adding a type converter for it.
+    private final java.sql.Date date = null;
+To overocme this we make a room >converters> Converter.kt file
+@TypeConverter - first fun will trnaform the date into Long and convert back to Date
+converts Date to format that is understandable by Android
+Still getting Date errors at Compile time
+Go to ShoppingListDatabase and annotate with @TypeConverters PLURAL specify the DataConverter in array
+now Room understands that we have a date converter
+
+Now our Data layer is complete, we need a connection between data and UI
+Lets build REPOSITORY
+building instances of DAOs and Funs to perform CRUD ops
+
+Now As we can not just pass on these repo items into the ViewModel, we need a cleaner way to manage this dependency
+we can use DI, but since this is a small case, we gonna inject them manually using Singletom option
+Singleton instance of the DBs that can used inside app - Graph
+we only need single instance ofdb throughout theapp, hence we use Singleton obj and do want to pass it outside the object class, so mark it PRIVATE SET
+Instant of repo by lazy and manage the dependencies //initialize when needed
+
+call provide fun to pass in the context for db
+creating a method that PROVIDES the db
+
+Make an Application class
+initiate onCreate() method
+pass the graph which provides with CONTEXT this
+So, as soon as app is create, it runs thie Provide method
+This new Application needs to be registeredin the manifest
+
+Lets build UI now
+Two new package in UI - Home and Detail (2 screens)
+Home> HomeViewModel where you initialize repository from Graph
+Also create a data class STATE which is initialized with an empty list of items, some Category and false Checked
+
+back to HomeViewModel class,  define variable state which is a mutableStateOf HomeState()
+
+
+init getItems before your run the getItems fun and the coroutines inside it
+build fun that returns list of items, which communicates witht he VM and use collectLatest
+initialize state and call satte.copy with items = it
+this will return   Flow where we call collectLatest(sus fun)
+build another fun to delete items
+fun to filter (if the id is not equal to a randomNumber, else get all items
+
+HomeScreen()
+Scaffold - FAB button
+
+While definining PaddingValues and other content inside of LazyColumn, you need to build items for LazyRoy which will display scrolling categories on top
+get icons for each category using @DrawableRes and a callback
+adding a Card within the categoryItem drawable using selectable modifiers
+define a Shape.kt in THEME package
+BACKGROUND color problem - if selected
+after completing CategoryItem, lets get back to the LazyRow inside the LazyColumn
+call category form Utils in items
+
+
+
+
+
 
 
 
