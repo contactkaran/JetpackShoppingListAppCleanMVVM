@@ -13,11 +13,44 @@ So, we have a list of custoemrs and we try to connect this list with list of ite
 Create a second table for item details, third table for storeID, and later join these two tables
 autoGenerate Primary key in Room
 
-Build DAOs, that will help interact with DB (small caps)
+Build DAOs (item, store and SHOPPINGLIST), that will help interact with DB (small caps)
 @Dao interface
 Do mention @Insert to tell Room to create an impl to insert the data as mentioned in the menthod
 here some of the items have the same id, so ensure to avoid conflicts
 whenever items have similar id, it will be replaced with a new one
 We use sus fun because we want to ensure that these DAO methods do not use the mainThread
+
+in @Query we can eithe ruse LiveData or Flow(coroutine) to get a list of Items from "ites" table
+the fun here is not sus fun because Flow is a Call item - NOT CLEAR
+
+@Query("""
+        SELECT * FROM items AS I INNER JOIN shopping_list AS S
+        ON I.listIdFK = S.list_id INNER JOIN stores AS ST
+        ON I.storeIdFK = ST.store_id
+    """)
+    //selected everything from itemsTable and combined it with shoppingListTable using ON condition
+    //FK combined with list_id, when condition true it is joined
+    
+need to create a separate data class to hold this combined data, so cretae data class ItemsWithStoreAndList
+use @Embedded at each variable declaration
+and fun getItemsWithStoreAndListFilteredById(listID: Int) will filter checking WHERE listID equals storeIdfilter
+last fun where we get SINGLE item using itemID
+
+
+now build a abstract class ShoppingListDatabase that inherits from RoomDatabase
+@Database - provide connections to the database entities, which is just an array
+Lets provide access to the Daos defined earlier
+Database class is responsible in creating a connections with the database. We should be abel to create a db from this class
+1. Manage the threads, 2. get single instance throughout out app
+Since databas eis an abstract class we cano not instantiate but can make companion objs
+it helps create instant of a class without actually instantiating it
+@Volatile - have to manage the instructions in a thread-safe manner
+make sure to instantiate null for easy initial instantiation
+then create a method that will get the database
+elvis operate makes sure if the instance is null, a new datbase gets created
+sync - means to lock only a single thread to owrk on this operation
+start building new database instance with variable "instance" using Room db builder
+so now instance will be set equal to INSTANCE and return the db
+
 
 
