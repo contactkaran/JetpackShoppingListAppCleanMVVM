@@ -1,1 +1,23 @@
+Let's get started
+Gradle dependencies for: Compose Navigation, Compose ViewModel, Room databaase, Test
+add this to Project Gradel - task clean(type: Delete) {
+    delete rootProject.buildDir}
+
+Start with DATA where you build Room package with Data Entity first - ShoppingList
+annotate with @Entity
+annotate the PrimaryKey for table in room (SQLite database)
+annotate ColumnInfo to rename the column as "list_id"
+SQLite is a relational database design - data stored using tables and data linked together using  relationships
+one-to-one, one-to-many, many-to-many
+So, we have a list of custoemrs and we try to connect this list with list of items(carrying item details - id, name, qty)
+Create a second table for item details, third table for storeID, and later join these two tables
+autoGenerate Primary key in Room
+
+Build DAOs, that will help interact with DB (small caps)
+@Dao interface
+Do mention @Insert to tell Room to create an impl to insert the data as mentioned in the menthod
+here some of the items have the same id, so ensure to avoid conflicts
+whenever items have similar id, it will be replaced with a new one
+We use sus fun because we want to ensure that these DAO methods do not use the mainThread
+
 
