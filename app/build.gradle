@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -64,4 +65,15 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.6.0")
+    // compose viewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    //room
+    implementation "androidx.room:room-runtime:2.5.1"
+    implementation "androidx.room:room-ktx:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.1"
+    testImplementation "androidx.room:room-testing:2.5.1"
+    androidTestImplementation "androidx.room:room-testing:2.5.1"
 }
