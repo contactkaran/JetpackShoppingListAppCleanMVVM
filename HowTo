@@ -1,4 +1,4 @@
-Let's get started
+cted category matches the homeStateLet's get started
 Gradle dependencies for: Compose Navigation, Compose ViewModel, Room databaase, Test
 add this to Project Gradel - task clean(type: Delete) {
     delete rootProject.buildDir}
@@ -118,10 +118,45 @@ and invoke onItemClick in the onClick modifier option
 adding border with an interactive color
 so if selected, the opacity gets reduced by 50% else not
 
-define a Shape.kt in THEME package
-BACKGROUND color problem - if selected
+Define a Shape.kt in the THEME package
+colors for selected and otherwise
+finally a Row that has icon (fixed size 24.dp)and text for categories
+
+
 after completing CategoryItem, lets get back to the LazyRow inside the LazyColumn
 call category form Utils in items
+
+Going BACK TO SCAFFOLD
+pick up items for LazyRow from Utils>category data class
+further lambda category:Category -> where we define the icon, title and check if the see;e
+so now we can invoke our category change in the onClick item.
+
+Back to MainActivity where we call HomeScreen composable fun with a onNavigate, keeping the values empty for now
+
+Back to Home.kt where we work on adding more items to display categories inside scaffold
+define another composable for the categories - vertical scrolling list of items
+
+Seems we forgot to add the StoreName inside the Models> data class Store
+
+To add Date we use CompositionLocalProvider 
+reduce opacity using argument LocalContentAlpha (Material2), no longer available in Material3
+
+create a fun FormatDate()
+
+then build second column that displays Qty and checkMark
+
+
+Now back to Scaffold where we call ShoppingItems in items(homeState.items)
+
+calling onNavigate to invoke inside item screen
+
+Now let's proceed to work on UI > Detail > DetailVM class
+this is where we specify the variables in class - itemID, and Repo
+
+Alongside, we define a data class DetailState to define and later monitor state of Details screen - lot of variables
+
+
+
 
 
 
