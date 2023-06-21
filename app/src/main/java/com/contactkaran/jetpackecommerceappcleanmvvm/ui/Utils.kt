@@ -10,7 +10,7 @@ object Utils {
         Category(title = "Fruits", resId = R.drawable.ic_fruits, id = 2),
         Category(title = "Cleaning", resId = R.drawable.ic_cleaning, id = 3),
         Category(title = "Electronic", resId = R.drawable.ic_electronic, id = 4),
-        Category(title = "None", resId = R.drawable.ic_baseline_not_interested_24 ,id = 10001)
+        Category(title = "None", resId =R.drawable.ic_baseline_not_interested_24 ,id = 10001)
     )
 }
 
