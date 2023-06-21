@@ -84,25 +84,40 @@ This new Application needs to be registeredin the manifest
 
 Lets build UI now
 Two new package in UI - Home and Detail (2 screens)
-Home> HomeViewModel where you initialize repository from Graph
-Also create a data class STATE which is initialized with an empty list of items, some Category and false Checked
+Home> HomeViewModel, where you initialize the repository from Graph
+Also, create a data class STATE which is initialized with an empty list of items, some Category and false Checked
 
-back to HomeViewModel class,  define variable state which is a mutableStateOf HomeState()
+back to HomeViewModel class,  define variable state, which is a mutableStateOf HomeState()
 
 
 init getItems before your run the getItems fun and the coroutines inside it
 build fun that returns list of items, which communicates witht he VM and use collectLatest
-initialize state and call satte.copy with items = it
-this will return   Flow where we call collectLatest(sus fun)
+initialize state and call state.copy with items = it
+this will return   Flow, where we call collectLatest(sus fun)
 build another fun to delete items
 fun to filter (if the id is not equal to a randomNumber, else get all items
 
+@Composable
 HomeScreen()
-Scaffold - FAB button
+start with variable onNavigate that takes in an Int value and returns a Kotlin Unit
+initialize homeViewModel from HomeViewModel class
+and homeState from homeViewModel.state
 
-While definining PaddingValues and other content inside of LazyColumn, you need to build items for LazyRoy which will display scrolling categories on top
-get icons for each category using @DrawableRes and a callback
-adding a Card within the categoryItem drawable using selectable modifiers
+Scaffold with a FAB button with onClick values using onNavigate.invoke - have to pass in an id
+so when you click FAB you will navigate to details screen to create a new item.
+telling app not to update existing item, but to create a new item
+define an Icon for FAB
+
+LazyColumn content inside lambda > item > LazyRow > create a Fun to display sliding categories - categoryItem()
+get icons for each categoryItem using @DrawableRes and a onItemClick callback that returns a Unit
+
+Adding a Card within the categoryItem drawable using selectable modifiers
+the selected will value will be passed on from homeState and interactionSource will be MutableIntSource()
+with an indication to RememberRipple()
+and invoke onItemClick in the onClick modifier option
+adding border with an interactive color
+so if selected, the opacity gets reduced by 50% else not
+
 define a Shape.kt in THEME package
 BACKGROUND color problem - if selected
 after completing CategoryItem, lets get back to the LazyRow inside the LazyColumn
