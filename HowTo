@@ -1,0 +1,132 @@
+Let's get started
+Gradle dependencies for: Compose Navigation, Compose ViewModel, Room databaase, Test
+add this to Project Gradel - task clean(type: Delete) {
+    delete rootProject.buildDir}
+
+Start with DATA where you build Room package with Data Entity first - ShoppingList
+annotate with @Entity
+annotate the PrimaryKey for table in room (SQLite database)
+annotate ColumnInfo to rename the column as "list_id"
+SQLite is a relational database design - data stored using tables and data linked together using  relationships
+one-to-one, one-to-many, many-to-many
+So, we have a list of custoemrs and we try to connect this list with list of items(carrying item details - id, name, qty)
+Create a second table for item details, third table for storeID, and later join these two tables
+autoGenerate Primary key in Room
+
+Build DAOs (item, store and SHOPPINGLIST), that will help interact with DB (small caps)
+@Dao interface
+Do mention @Insert to tell Room to create an impl to insert the data as mentioned in the menthod
+here some of the items have the same id, so ensure to avoid conflicts
+whenever items have similar id, it will be replaced with a new one
+We use sus fun because we want to ensure that these DAO methods do not use the mainThread
+
+in @Query we can eithe ruse LiveData or Flow(coroutine) to get a list of Items from "ites" table
+the fun here is not sus fun because Flow is a Call item - NOT CLEAR
+
+@Query("""
+        SELECT * FROM items AS I INNER JOIN shopping_list AS S
+        ON I.listIdFK = S.list_id INNER JOIN stores AS ST
+        ON I.storeIdFK = ST.store_id
+    """)
+    //selected everything from itemsTable and combined it with shoppingListTable using ON condition
+    //FK combined with list_id, when condition true it is joined
+    
+need to create a separate data class to hold this combined data, so cretae data class ItemsWithStoreAndList
+use @Embedded at each variable declaration
+and fun getItemsWithStoreAndListFilteredById(listID: Int) will filter checking WHERE listID equals storeIdfilter
+last fun where we get SINGLE item using itemID
+
+
+now build a abstract class ShoppingListDatabase that inherits from RoomDatabase
+@Database - provide connections to the database entities, which is just an array
+Lets provide access to the Daos defined earlier
+Database class is responsible in creating a connections with the database. We should be abel to create a db from this class
+1. Manage the threads, 2. get single instance throughout out app
+Since databas eis an abstract class we cano not instantiate but can make companion objs
+it helps create instant of a class without actually instantiating it
+@Volatile - have to manage the instructions in a thread-safe manner
+make sure to instantiate null for easy initial instantiation
+then create a method that will get the database
+elvis operate makes sure if the instance is null, a new datbase gets created
+sync - means to lock only a single thread to owrk on this operation
+start building new database instance with variable "instance" using Room db builder
+so now instance will be set equal to INSTANCE and return the db
+We have now created a db in thread-safe manner
+
+As we try to Build Package we get error for val date: Date in the Model.kt file
+error: Cannot figure out how to save this field into database. You can consider adding a type converter for it.
+    private final java.sql.Date date = null;
+To overocme this we make a room >converters> Converter.kt file
+@TypeConverter - first fun will trnaform the date into Long and convert back to Date
+converts Date to format that is understandable by Android
+Still getting Date errors at Compile time
+Go to ShoppingListDatabase and annotate with @TypeConverters PLURAL specify the DataConverter in array
+now Room understands that we have a date converter
+
+Now our Data layer is complete, we need a connection between data and UI
+Lets build REPOSITORY
+building instances of DAOs and Funs to perform CRUD ops
+
+Now As we can not just pass on these repo items into the ViewModel, we need a cleaner way to manage this dependency
+we can use DI, but since this is a small case, we gonna inject them manually using Singletom option
+Singleton instance of the DBs that can used inside app - Graph
+we only need single instance ofdb throughout theapp, hence we use Singleton obj and do want to pass it outside the object class, so mark it PRIVATE SET
+Instant of repo by lazy and manage the dependencies //initialize when needed
+
+call provide fun to pass in the context for db
+creating a method that PROVIDES the db
+
+Make an Application class
+initiate onCreate() method
+pass the graph which provides with CONTEXT this
+So, as soon as app is create, it runs thie Provide method
+This new Application needs to be registeredin the manifest
+
+Lets build UI now
+Two new package in UI - Home and Detail (2 screens)
+Home> HomeViewModel, where you initialize the repository from Graph
+Also, create a data class STATE which is initialized with an empty list of items, some Category and false Checked
+
+back to HomeViewModel class,  define variable state, which is a mutableStateOf HomeState()
+
+
+init getItems before your run the getItems fun and the coroutines inside it
+build fun that returns list of items, which communicates witht he VM and use collectLatest
+initialize state and call state.copy with items = it
+this will return   Flow, where we call collectLatest(sus fun)
+build another fun to delete items
+fun to filter (if the id is not equal to a randomNumber, else get all items
+
+@Composable
+HomeScreen()
+start with variable onNavigate that takes in an Int value and returns a Kotlin Unit
+initialize homeViewModel from HomeViewModel class
+and homeState from homeViewModel.state
+
+Scaffold with a FAB button with onClick values using onNavigate.invoke - have to pass in an id
+so when you click FAB you will navigate to details screen to create a new item.
+telling app not to update existing item, but to create a new item
+define an Icon for FAB
+
+LazyColumn content inside lambda > item > LazyRow > create a Fun to display sliding categories - categoryItem()
+get icons for each categoryItem using @DrawableRes and a onItemClick callback that returns a Unit
+
+Adding a Card within the categoryItem drawable using selectable modifiers
+the selected will value will be passed on from homeState and interactionSource will be MutableIntSource()
+with an indication to RememberRipple()
+and invoke onItemClick in the onClick modifier option
+adding border with an interactive color
+so if selected, the opacity gets reduced by 50% else not
+
+define a Shape.kt in THEME package
+BACKGROUND color problem - if selected
+after completing CategoryItem, lets get back to the LazyRow inside the LazyColumn
+call category form Utils in items
+
+
+
+
+
+
+
+
