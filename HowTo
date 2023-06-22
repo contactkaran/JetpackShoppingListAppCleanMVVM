@@ -155,6 +155,37 @@ this is where we specify the variables in class - itemID, and Repo
 
 Alongside, we define a data class DetailState to define and later monitor state of Details screen - lot of variables
 
+back to continuing to build DetailVM - which fetches the data from DATA and helps building UI
+now we initialize the DetailState
+
+We want to be able to tell is user is typing anything in the searchbox using a State
+initialize variable isFieldNotEmpty and use a get() where we check and get value of item inside the state (abive defined)
+
+Now pass the methods that will modify the STATE
+
+Create funs to be able to Add store items
+find a store name and add it to the storeList
+
+Create fun to update ShoppingListItems
+Create fun to Add a STORE
+fun to GET STORES
+
+Go to top of the DetailVM class and begin the init{} initializing all funs defined in the VM for easy calls
+first check if itemId is not = -1, then fetch all the items filtered by Id
+populate the categories from Utils and find a particular item, if the method can not find the item, then use default Category()
+
+another init fun to call the state
+
+NOw, the issue is that the itemId in the constructor is not provided at runtime, repository is obviously provided
+So, we create VM factory at the bottom, just over our dataClass
+
+now the Factory receives an ID from the VM provider
+Ctrl + O for override it should return the DetailVM with itemId = id as a T and suppress for unchecked casting
+
+
+Now VM is ready and we move to UI part
+
+
 
 
 
