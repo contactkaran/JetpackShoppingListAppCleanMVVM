@@ -211,6 +211,27 @@ It will have a Row and another Row inside with Icon - DateRange
 call the formatDate fun with the value state.date from state
 We now need a date-picker dialogue - SEPARATE COMPOSABLE fun
 get the current year, mm, dd, and time. Create a STATE here too. which is remember mutablestateOf empty String
+using the callback to get a date
+
+back to the DetailEntry Composable
+instantiate a datePickerDialogue in a variable
+we need to invoke the onDateSelected using an Icon
+just call the mDatePickerDialogue function with a SHOW()
+
+now adding the Qty TextField
+
+Now we need scrollable (sidewise) categories
+
+Last we got the "Add Item" button pending
+So WHEN is used to check if the update is still going on or is complete. Once complete, it invokes NavigateUP
+
+creating a Preview Composable to check, use systemUi = true
+
+NOW we work on the final work in SCAFFOLD, just call DetailEntry() and fill the fields
+
+Now that HomeScreen and Detail.kt complete we go to MainActivity and deploy navigation to be able to navigate between two screens
+
+
 
 
 
