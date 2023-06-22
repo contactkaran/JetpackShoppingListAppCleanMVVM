@@ -10,8 +10,7 @@ data class ShoppingList(
     @ColumnInfo(name = "list_id")
     @PrimaryKey
     val id: Int,
-    val name: String,
-    val desc: String
+    val name: String
 )
 
 @Entity(tableName = "items")
@@ -20,11 +19,11 @@ data class Item(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val itemName: String,
-    val quantity: String,
+    val qty: String,
     val listId: Int,
-    val storeIdFK: Int,
+    val storeIdFk: Int,
     val date: Date,
-    val isChecked: Boolean
+    val isChecked: Boolean,
 )
 
 //connecting shoppingList with itemsTable, bring PrimaryKey from first table down to second
@@ -35,5 +34,6 @@ data class Store(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "store_id")
     val id: Int = 0,
-    val listIdFK: Int  //linking here
+    val listIdFK: Int,  //linking here
+    val storeName: String
 )

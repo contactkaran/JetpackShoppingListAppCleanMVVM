@@ -16,7 +16,7 @@ class Repository(
     val getItemsWithListAndStore = listDao.getItemsWithStoreAndList()
 
     //fun that returns filtered data
-    fun getItemsWithStoreAndList(id: Int) = listDao
+    fun getItemWithStoreAndList(id: Int) = listDao
         .getItemWithStoreAndListFilteredById(id)  //single item
 
     fun getItemWithStoreAndListFilteredById(id: Int) = listDao
