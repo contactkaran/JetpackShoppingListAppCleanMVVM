@@ -229,7 +229,19 @@ creating a Preview Composable to check, use systemUi = true
 
 NOW we work on the final work in SCAFFOLD, just call DetailEntry() and fill the fields
 
-Now that HomeScreen and Detail.kt complete we go to MainActivity and deploy navigation to be able to navigate between two screens
+Now that HomeScreen and Detail.kt are complete we go to MainActivity and deploy navigation to be able to navigate between two screens
+
+build a Navigation.kt in UI package
+define a enum class where Routes are specified
+
+create a composable Navigation class with arguments of navHostController (Navigation dependency already added)
+initiate NavHost and specify the controller and Start Destination, don't forget to rememberNavController()
+NavHost should be followed by code block {}
+start with composable with details in ()
+further we continue to specify
+
+
+
 
 
 
