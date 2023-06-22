@@ -155,10 +155,10 @@ this is where we specify the variables in class - itemID, and Repo
 
 Alongside, we define a data class DetailState to define and later monitor state of Details screen - lot of variables
 
-back to continuing to build DetailVM - which fetches the data from DATA and helps building UI
+back to continuing to build DetailVM - which fetches the data from DATA and helps to build UI
 now we initialize the DetailState
 
-We want to be able to tell is user is typing anything in the searchbox using a State
+We want to be able to tell is user is typing anything in the search box using a State
 initialize variable isFieldNotEmpty and use a get() where we check and get value of item inside the state (abive defined)
 
 Now pass the methods that will modify the STATE
@@ -182,8 +182,49 @@ So, we create VM factory at the bottom, just over our dataClass
 now the Factory receives an ID from the VM provider
 Ctrl + O for override it should return the DetailVM with itemId = id as a T and suppress for unchecked casting
 
-
 Now VM is ready and we move to UI part
+
+Create file detail.kt inside the Detail package. 
+in the composable fun DetailScreen initialize the viewModel variable,
+it should use the Factory we create and use the type - DetailVM
+At run time we pass the id into the fun to construct
+Build Scaffold() 
+
+Now building specific parts of scaffold in different funs
+first Composable will be DetailEntry which carries all entry details
+
+Give space for the user to enter data in the STORE box. i.e., save new STORE
+so within the DetailEntry composable fun, instantiate a new state variable "isNewEnabled" activates the New button
+
+Continue building a Column after that carries textFileds to insert new items
+
+Now under the Item box we have Store Box, where user can add a store of their choice
+False = isScreenDialogueDismissed
+The DOWN ARROW pop ups a list of Store names - create a Pop-up using - Pupup with onDismissRequest equalling isScreenDismissed state
+followed by a surface containing a column with Text in it for each of the Store names in the list
+ofcourse each of the names should be clickable with onStoreChange invoked
+
+TextButton where isNewEnabled is True then you write "SAVE"
+
+The next row in UI is a calendar button and Quantity box
+It will have a Row and another Row inside with Icon - DateRange
+call the formatDate fun with the value state.date from state
+We now need a date-picker dialogue - SEPARATE COMPOSABLE fun
+get the current year, mm, dd, and time. Create a STATE here too. which is remember mutablestateOf empty String
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
