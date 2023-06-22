@@ -141,7 +141,7 @@ fun ShoppingItems(
                     .padding(5.dp)
             ) {
                 Text(
-                    text = "Qty: ${item.item.quantity}",
+                    text = "Qty: ${item.item.qty}",
                     style = MaterialTheme.typography.displayLarge,
                     fontWeight = FontWeight.Bold
                 )
