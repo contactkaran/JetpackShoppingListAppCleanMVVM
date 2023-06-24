@@ -240,6 +240,29 @@ NavHost should be followed by code block {}
 start with composable with details in ()
 further we continue to specify
 
+use "composable" within the NavHost to define route for navigation to take.
+Also within this composable, define HomeScreen with onNavigate id
+Also specify BackstaeckEntry (use Elvis operator)
+when user clicks back, the navHostController.navigateUp() takes them back to uppermost stack
+
+go back to MainActivity
+create a new composables within the MainActivity class, call it ShoppingListApp
+inside the composable call AppNavigation()
+
+TESTING THE APP
+
+Launch it in Emulator
+Click + to add new item
+add new Store, qty and date when you want to go shopping, specify category
+As soon as items are added, they start diplaying in the List on Home screen
+
+
+OOPS .. deleting item option is missing
+go to Home.kt and define a DismissState in the LazyColumn
+
+
+trying to implement the dismissState, which apparently does not work in Material3
+
 
 
 
