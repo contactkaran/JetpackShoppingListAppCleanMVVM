@@ -50,8 +50,8 @@ import com.contactkaran.jetpackecommerceappcleanmvvm.ui.theme.Shapes
 import java.util.Calendar
 import java.util.Date
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(
     id: Int,

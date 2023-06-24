@@ -78,6 +78,41 @@ fun HomeScreen(onNavigate: (Int) -> Unit) {
             }
 
             items(homeState.items) {
+
+                //TODO - trying to implement the dismissState, which apparently does not work in Material3
+
+                /*
+                val dismissState = rememberDismissState(
+                    confirmStateChange = { value ->
+                        if (value == DismissValue.DismissedToEnd) {
+                            homeViewModel.deleteItem(it.item)
+                        }
+                        true
+                    }
+                )
+                SwipeToDismiss(
+                    state = dismissState,
+                    background = {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(), color = Color.Red
+                        ) {
+
+                        }
+                    },
+                    dismissContent = {
+                        ShoppingItems(
+                            item = it,
+                            isChecked = it.item.isChecked,
+                            onCheckedChange = homeViewModel::onItemCheckedChange
+                        ) {
+                            onNavigate.invoke(it.item.id)
+                        }
+                    }
+                )
+
+                */
+
+
                 ShoppingItems(
                     item = it,
                     isChecked = it.item.isChecked,
@@ -117,11 +152,15 @@ fun ShoppingItems(
             ) {
                 Text(
                     text = item.item.itemName,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.size(3.dp))
-                Text(text = item.store.storeName)
+                Text(
+                    text = item.store.storeName,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
+                )
                 Spacer(modifier = Modifier.size(3.dp))
                 CompositionLocalProvider(
                     LocalContentColor provides
@@ -131,7 +170,7 @@ fun ShoppingItems(
                     //TODO- formatting Date here
                     Text(
                         text = formatDate(item.item.date),
-                        style = MaterialTheme.typography.displaySmall
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }  //This column displays ItemName, Store and Date
@@ -142,7 +181,7 @@ fun ShoppingItems(
             ) {
                 Text(
                     text = "Qty: ${item.item.qty}",
-                    style = MaterialTheme.typography.displayLarge,
+                    style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.size(3.dp))
